@@ -1,0 +1,785 @@
+openapi: 3.0.3
+info:
+  version: 2.0.1
+  title: Gestopago API
+  description: |
+    Gestopago provides a Web-API with which its possible  the interconection of many types of clients to consume electronic services, entertainment, prepaid services, and process payments.
+    
+    
+  termsOfService: 'https://gestopago.com/'
+  contact:
+    name: Gestopago
+    email: contacto@gestopago.mx
+    url: 'https://gestopago.com/'
+  x-logo:
+    url: 'https://redocly.github.io/redoc/petstore-logo.png'
+    altText: Gestopago logo
+servers:
+  - description: Sandbox
+    url: 'https://gestopago.portalventas.net/sistema/service'
+      
+components:
+  parameters:
+    reference:
+      name: reference
+      in: path
+      description: Reference number
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: 015611307028912009280000001684
+    phone:
+      name: phone
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: '1111111111'
+    idService:
+      name: idServicio
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: '166'
+    idProduct:
+      name: idProducto
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: '597'
+    localHour:
+      name: horaLocal
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: '20201218164743'
+    paymentAmount:
+      name: montoPago
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: '100'
+    upc:
+      name: upc
+      in: path
+      required: true
+      allowEmptyValue: false
+      schema:
+        type: string
+        example: Om7m41j0lDVakwK
+  
+
+  requestBodies:
+    # Vertex RequestBodies
+    ValidCod:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <ECHO>codigo dispositivo</ECHO>
+                <VALID>1</VALID>
+              </RESPONSE
+            </xml>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+      description: Success authentication. **ResponseCode 01**
+      required: true
+    InvalidCod:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <ECHO>codigo dispositivo</ECHO>
+                <VALID>0</VALID>
+              </RESPONSE
+            </xml>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'  
+      description: Fail authentication. **ResponseCode 0**
+      required: true  
+    gBalance:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <MENSAJE>
+                  <CODIGO>1</CODIGO>
+                  <TEXTO>OPERACION REALIZADA CON EXITO</TEXTO>
+                </MENSAJE>
+                <SALDO_F>686</SALDO_F>
+                <SALDO>686</SALDO>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/getBalance'
+      description: The vertex to add to the graph
+      required: true    
+    gProductlist:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <MENSAJE>
+                  <CODIGO>1</CODIGO>
+                  <TEXTO>OPERACION REALIZADA CON EXITO</TEXTO>
+                </MENSAJE>
+                <PRODUCTOS>
+                  <producto>string</producto>
+                </PRODUCTOS>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/getProduct'
+      description:   List of available products to sell. **ResponseCode 01**
+      required: true    
+    sendtx1:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <ID_TX>108121</ID_TX>
+                <NUM_AUTORIZACION>10083</NUM_AUTORIZACION>
+                <SALDO>0</SALDO>
+                <COMISION_F>0</COMISION_F>
+                <COMISION>0</COMISION>
+                <FECHA>1/Dic/2020 17:31:27</FECHA>
+                <MONTO>10</MONTO>
+                <MENSAJE>
+                  <CODIGO>1</CODIGO>
+                  <REFERENCIA>773040700985</REFERENCIA>
+                  <TEXTO>Operacion realizada con exito</TEXTO>
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendTx'
+      description:   List of available products to sell. **ResponseCode 01**
+      required: true 
+    sendtx55Tel:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE> 
+                <NUM_AUTORIZACION>-1</NUM_AUTORIZACION>
+                <MENSAJE>
+                  <CODIGO>55</CODIGO>
+                  <TEXTO>Por favor ingresa los 10 digitos de tu Numero de Telefono </TEXTO>
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendTx'
+      description:   Invalid number or Invalid reference. **ResponseCode 55**
+      required: true   
+    sendtx55Ref:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE> 
+                <NUM_AUTORIZACION>-1</NUM_AUTORIZACION>
+                  <MENSAJE>
+                    <CODIGO>55</CODIGO>
+                    <TEXTO>Referencia Invalida</TEXTO>
+                  </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendTx'
+      description:   Invalid number or Invalid reference. **ResponseCode 55**
+      required: true  
+    sendtx06Succ:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <NUM_AUTORIZACION>105795</NUM_AUTORIZACION>
+                <PIN>0YR7JY05WB9MPWS5</PIN>
+                <MENSAJE>
+                  <CODIGO>06</CODIGO>
+                  <TEXTO>La transaccion fue aplicada exitosamente. Autorizacion [105795] </TEXTO>
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendTx'
+      description:   Transaction status. **ResponseCode 06**
+      required: true    
+    sendtx06Fail:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE> 
+                <ID_TX>107805</ID_TX>
+                <NUM_AUTORIZACION>109863</NUM_AUTORIZACION>
+                <SALDO>187708.59</SALDO>
+                <COMISION>5.84</COMISION>
+                <SALDO_F>187</SALDO_F>
+                <COMISION_F>5</COMISION_F>
+                <FECHA> 18/Dic/2020 19:24:23 </FECHA>
+                <MONTO>165.0</MONTO>
+                <MENSAJE>
+                  <CODIGO>06</CODIGO>
+                  <TEXTO>Transaccion aplicada anteriormente Autorización [109863] No es posible pagar la misma factura 2 veces</TEXTO>
+                  <REFERENCIA></REFERENCIA>
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendTx'
+      description:   Transaction status. **ResponseCode 06**
+      required: true    
+      
+    timeOut:
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                <NUM_AUTORIZACION>-1</NUM_AUTORIZACION>
+                <MENSAJE>
+                  <CODIGO>0</CODIGO>
+                  <TEXTO>Tiempo de espera alcanzado, la transacción no ha sido registrada</TEXTO>
+                  <COMISION>0</COMISION>
+                  <FECHA>1/Dic/2020 17:31:27</FECHA>
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+      description:   TimeOut. **ResponseCode 82**
+      required: true    
+    TransactionNotApp: 
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE>
+                  <NUM_AUTORIZACION>0</NUM_AUTORIZACION>
+                  <MENSAJE>
+                    <CODIGO>70</CODIGO>
+                    <TEXTO>La transaccion no fue aplicada</TEXTO>
+                    <ID_TX>-1</ID_TX>
+                  </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+      description:   Transaction not applied. **ResponseCode 70**
+      required: true  
+    
+    ValidRefBalance: 
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE> 
+                <MENSAJE>
+                  <CODIGO>01</CODIGO> 
+                  <TEXTO>Referencia Válida</TEXTO> 
+                  <SALDO>2150.00</SALDO
+                </MENSAJE>
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/verifyRef'
+      description:   Valid reference. **ResponseCode 01**
+      required: true 
+      
+    ValidRef: 
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+              <RESPONSE> 
+                <MENSAJE> 
+                  <CODIGO>01</CODIGO> 
+                  <TEXTO>Referencia Válida</TEXTO> 
+                </MENSAJE> 
+              </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/verifyRef'
+      description:   Valid reference. **ResponseCode 01**
+      required: true 
+    notVerify: 
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+             <RESPONSE>
+              <MENSAJE>
+                <CODIGO>4</CODIGO>
+                <TEXTO>Servicio no disponible para verificación</TEXTO>
+              </MENSAJE>
+            </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+      description:   Service not available for verification. **ResponseCode 04**
+      required: true 
+      
+    invalidRef: 
+      content:
+        application/xml:
+          # v=========v note example below
+          example: |
+            <?xml version="1.0" encoding="UTF-8">
+            <RESPONSE>
+              <MENSAJE>
+                <CODIGO>2</CODIGO>
+                <TEXTO>Referencia Inválida</TEXTO>
+              </MENSAJE>
+            </RESPONSE>
+          schema:
+            allOf:
+              - description: The vertex to read in
+                title: Vertex
+              - $ref: '#/components/schemas/sendEch0'
+      description:   Not Successful / Invalid Reference. **ResponseCode 03**
+      required: true   
+  
+  securitySchemes:
+    bearerToken:
+      type: http
+      description: 'A [JWT](https://jwt.io/) access token required to identify an user'
+      scheme: bearer
+      bearerFormat: JWT
+ 
+  schemas:
+    
+    sendEch0:
+      type: object
+      properties:
+        ECHO:
+          type: string
+        VALID:
+          type: integer       
+          description: 1= valid, 0=invalid
+
+    validateMe:             # Can be referenced as '#/components/schemas/User'
+      type: object
+      properties:
+        CODIGO:
+          type: string
+        TEXTO:
+          type: string
+        VALID: 
+          type: integer       
+          description: 1= valid, 0=invalid
+          
+    getProduct:             # Can be referenced as '#/components/schemas/User'
+      type: object
+      properties:
+        servicio:
+          type: string
+          description: It is the name of the service. An example of a service is Telcel, Movistar, water payment, natural gas payment, sky, Telmex etc.
+        producto:
+          type: string
+          description: It is the name of the product. An example of a product is recharge 100, recharge 200, recharge 300 etc.
+        Idservicio: 
+          type: integer       
+          description: Id of the service.
+        Iproducto: 
+          type: integer       
+          description: It is the product identifier.
+        IdCatTipoProd:
+          type: integer
+          description: |
+           Describe the type of service handled on the platform, which is as follows.
+
+              1   Movistar
+              2   Telcel
+              3   ATT/Iusacell
+              4   Unefon
+              5   Pago de Servicios
+              6   Nextel
+              7   Pago de Impuestos / Gobierno
+              8   Productos Financieros
+              9   Productos por Catálogo
+              10   Servicios de Prepago
+              11   Entretenimiento
+              12   Virgin
+              13   Otras Recargas
+              14   Venta de Seguros
+              15   Pago derechos de agua
+              16   Juegos y Sorteos
+              18   Servicios de Autopistas y Transportes
+              
+              **Telephone companies are a type of service, this helps many customers to be able to group their services and products in a better way.**
+        tipoFront:
+          type: integer
+          description: |      
+            It is a numeric field that identifies the type of front end necessary to carry out the collection of parameters in the system. At the moment there are 4 different types of front.
+        Precio:
+          type: integer
+          description: |   
+            Field that indicates the price to the final customer of the product-service. In the case of payment of services, this field indicates the cost or commission to be charged to the final customer for the use of the service.
+
+    sendTx:             # Can be referenced as '#/components/schemas/User'
+      type: object
+      properties:
+        CODIGO:
+          type: string
+          description: |
+           Define whether the transaction was successful or not. In case of obtaining “01” la transacción fue exitosa, a value other than this value is an error that can be found in the error table.
+        ID_TX:
+          type: string
+          description: |
+            It is the transaction number with which it is identified on the platform, a unique identifier also used in the sending by ticket mail.
+        NUM_AUTORIZACION: 
+          type: integer       
+          description: |
+            It is the transaction number with which it is identified on the platform, a unique identifier also used in the sending by ticket mail.
+        SALDO: 
+          type: integer       
+          description: |
+            Balance of the bag after the transaction is made, it already contemplates the commission generated.
+        COMISION: 
+          type: integer       
+          description: |
+            The commission generated by the transaction.
+        MONTO: 
+          type: integer       
+          description: |
+            Total amount of the transaction
+        
+    verifyRef:             # Can be referenced as '#/components/schemas/User'
+      type: object
+      properties:
+        CODIGO:
+          type: integer
+          description: |
+            The service will respond an XML with the CODE element: 
+              01 = Valid Reference
+              02 = Invalid Reference
+              03 = Reference associated with fraud
+              04 = Service not available for verification
+              05 = Invalid reference length     
+                
+          
+    getBalance: 
+      type: object
+      properties:
+        SALDO_F:
+          type: integer
+          description: |
+            Returns the formatted numeric value by adding a comma every 3 digits.
+        SALDO:
+          type: integer
+          description: |
+            Returns the numerical value without formatting.
+        CODIGO:
+          type: string
+          description: |
+            String (10 = identified / 11 = not identified).
+        TEXTO:
+          type: string 
+  
+   
+    
+paths:
+
+  /sendEcho.do:
+    get:
+      summary: Authenticates a client
+      description: |
+        Authenticates a client using a refresh token provided by Flux team.
+        This endpoint will return an access token required to identify authenticated users and perform payment request
+      tags:
+        - sendEcho
+      responses:
+        200:
+          description: Returns success if it was successful
+          $ref: '#/components/requestBodies/ValidCod'
+        401:
+          description: Fail
+          $ref: '#/components/requestBodies/InvalidCod'  
+        
+  /getBalance.do:
+    get:
+      summary: Obtaining the current balance of the distributor.
+      description: |
+        This method obtains the current balance of the distributor. In case that the distributor who consults this method does not own a stock exchange, he will obtain a balance of 0.0.
+      tags:
+        - getBalance
+      responses:
+        200:
+          description: Returns success if it was successful
+          $ref: '#/components/requestBodies/gBalance'
+  /getProductList.do:
+    get:
+      summary: This method obtains the list of services and products that the distributor is authorized to sell.
+      description: 'It is a method that allows the integrator to save in their database the product/service ID''s, which they will use in the sendTx method and confirmTx. **Note:** It is recommended that this method be executed only once per day at 12:05 am as updates on new products, new prices or new services are executed at 12:00 am by Gestopago.'
+      tags:
+        - getProductList
+      responses:
+        200:
+          description: Returns success if it was successful
+          $ref: '#/components/requestBodies/gProductlist'
+  /sendTx.do:
+    post:
+      summary: Make a sale of any type of product / service
+      description: 'Register the sale of a service/product can be for Sale Air Time, Payment of services or Entertainment, and Prepaid.'
+      tags:
+        - sendTx
+      requestBody:
+        description: Paremeters supported to request a payment
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - telefono
+                - idServicio
+                - idProducto
+                - horaLocal
+                - referencia
+                - montoPago
+                - upc
+              properties:
+                telefono:
+                  description: 'Cellphone to recharge in case of tipofront = 1, for tipoFront=2 thevalue should be **1111111111**.'
+                  type: string
+                idServicio:
+                  description: It is the service identifier
+                  type: integer
+                idProducto:
+                  description: It is the product identifier
+                  type: integer
+                horaLocal:
+                  description: The format for the time is as follows **yyyyMMddHHmmss**.
+                  type: string
+                referencia:
+                  description: Used for **payment of services**. This field is used to specify the alphanumeric reference indicated on the receipt of the service to be paid.
+                  type: string
+                montoPago:
+                  description: Used for payment of services. Amount that specifies the payment to be made. p.e If the service receipt says that the amount to be paid is $ 490.00 this is the exact amount to be sent in this field.
+                  type: string
+                operator:
+                  description: Operator's name if is available
+                  type: string
+                upc:
+                  description: It is the unique identifier of the operation by the integrator.
+                  type: string
+                  format: string15
+            examples:
+              PaymentService:
+                summary: Payment Service
+                value:
+                  idProducto: 271
+                  idServicio: 107
+                  telefono: '1111111111'
+                  horaLocal: '20201222110642'
+                  referencia: '7516881819'
+                  montoPago: 458
+                  upc: '12760642625'
+              Recharge:
+                summary: Recharge
+                value:
+                  idProducto: 298
+                  idServicio: 115
+                  telefono: '5512134073'
+                  horaLocal: '20201222104555'
+                  upc: '2133135523'
+              giftcard:
+                summary: Giftcard
+                value:
+                  idProducto: 5611
+                  idServicio: 669
+                  telefono: '#1111111111'
+                  horaLocal: '20201222104555'
+                  upc: '2133135523'
+      responses:
+        200:
+          description: Returns success if it was successful
+          $ref: '#/components/requestBodies/sendtx1'
+        400:
+          description: Fail
+          $ref: '#/components/requestBodies/sendtx55Tel'
+        401:
+          description: Fail
+          $ref: '#/components/requestBodies/sendtx06Succ'
+        500:
+          description: TimeOut
+          $ref: '#/components/requestBodies/timeOut'
+
+  /confirmTx.do:
+    post:
+      summary: Validate the status of the transaction
+      description: This method should be invoked after receiving a TimeOut or some error or exception from the client side that avoided receiving the response of the sendTx method but control should be taken not to be invoked within **62 seconds of sending the transaction to be confirmed**.
+      tags:
+        - confirmTx
+      requestBody:
+        description: The parameters used in this method must be exactly the same as those used in the sendTx.do transaction
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - telefono
+                - idServicio
+                - idProducto
+                - horaLocal
+                - referencia
+                - montoPago
+                - upc
+              properties:
+                telefono:
+                  description: 'Cellphone to recharge in case of tipofront = 1, for tipoFront=2 thevalue should be **1111111111**.'
+                  type: string
+                idServicio:
+                  description: It is the service identifier
+                  type: integer
+                idProducto:
+                  description: It is the product identifier
+                  type: integer
+                horaLocal:
+                  description: The format for the time is as follows **yyyyMMddHHmmss**.
+                  type: string
+                referencia:
+                  description: Used for **payment of services**. This field is used to specify the alphanumeric reference indicated on the receipt of the service to be paid.
+                  type: string
+                montoPago:
+                  description: Used for payment of services. Amount that specifies the payment to be made. p.e If the service receipt says that the amount to be paid is $ 490.00 this is the exact amount to be sent in this field.
+                  type: string
+                upc:
+                  description: It is the unique identifier of the operation by the integrator.
+                  type: string
+                  format: string15
+            examples:
+              PaymentService:
+                summary: Payment Service
+                value:
+                  idProducto: 271
+                  idServicio: 107
+                  telefono: '1111111111'
+                  horaLocal: '20201222110642'
+                  referencia: '7516881819'
+                  montoPago: 458
+                  upc: '12760642625'
+              Recharge:
+                summary: Recharge
+                value:
+                  idProducto: 298
+                  idServicio: 115
+                  telefono: '5512134073'
+                  horaLocal: '20201222104555'
+                  upc: '2133135523'
+              giftcard:
+                summary: Giftcard
+                value:
+                  idProducto: 5611
+                  idServicio: 669
+                  telefono: '#1111111111'
+                  horaLocal: '20201222104555'
+                  upc: '2133135523'
+      responses:
+        200:
+          description: Returns success if it was successful
+          $ref: '#/components/requestBodies/sendtx06Succ'
+        400:
+          description: Fail
+          $ref: '#/components/requestBodies/TransactionNotApp'
+        
+  /verifyReference.do:
+    post:
+      summary: Verifying if the reference sent for a Service Payment is valid.
+      description: |
+        This method allows verifying if the reference sent for a Service Payment is valid, allowing the integrator to reduce the number of possible reversals by validating a reference before sending it to pay.
+      tags:
+        - verifyReference
+      requestBody:
+        description: The parameters used in the JSON format encrypted with the key delivered.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - idServicio
+                - referencia
+              properties:
+                idServicio:
+                  description: It is the service identifier
+                  type: integer
+                referencia:
+                  description: Used for **payment of services**. This field is used to specify the alphanumeric reference indicated on the receipt of the service to be paid.
+                  type: string
+      responses:
+        200:
+          $ref: '#/components/requestBodies/ValidRefBalance'
+        400:
+          $ref: '#/components/requestBodies/invalidRef'
+        401:
+          $ref: '#/components/requestBodies/notVerify'
