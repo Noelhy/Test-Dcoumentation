@@ -1,6 +1,5 @@
 module.exports = {
   title: 'Gestopago',
-  tagline: 'The tagline of my site',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -22,7 +21,7 @@ module.exports = {
           label: 'Docs',
           position: 'left',
         },
-        {to: 'blog', label: 'Api Gestopago', position: 'left'},
+        
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -37,17 +36,21 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
+              label: 'GestoPago API',
               to: 'docs/',
             },
             {
-              label: 'Second Doc',
+              label: 'API Methods',
               to: 'docs/doc2/',
+            },
+            {
+              label: 'Response Code',
+              to: 'docs/doc3/',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Contact',
           items: [
             {
               label: 'Stack Overflow',
@@ -67,8 +70,8 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: 'blog',
+              label: 'Certification Process',
+              to: 'docs/mdx/',
             },
             {
               label: 'GitHub',

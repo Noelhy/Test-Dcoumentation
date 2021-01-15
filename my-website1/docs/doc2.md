@@ -26,6 +26,14 @@ This method has the goal of recovering the final status of the transaction by re
 ## getBalance
 This method allows the integrator to know the balance of his prepaid bag, so he can have his own platform updated with the remaining balance.
 
+## verifyReference
+This method allows verifying if the reference sent for a Service Payment is valid, allowing the integrator to reduce the number of possible reversals by validating a reference before sending it to pay.
+
+**NOTES:** 
+Not all service payments are available for verification. If a service is not available for validation, the integrator must simply continue with the subscription process.
+Some services show the reference balance, so the response can be successful with the balance or successful without the balance.
+
+
 ## API FLOW  GESTOPAGO
 
 ![img](../static/img/API_FLOW.png)

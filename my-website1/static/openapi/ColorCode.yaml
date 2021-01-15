@@ -140,9 +140,9 @@ components:
           schema:
             allOf:
               - description: The vertex to read in
-                title: Vertex
+                title: Success
               - $ref: '#/components/schemas/getBalance'
-      description: The vertex to add to the graph
+      description: Success authentication.  **ResponseCode 01**
       required: true    
     gProductlist:
       content:
@@ -550,10 +550,9 @@ paths:
 
   /sendEcho.do:
     get:
-      summary: Authenticates a client
+      summary: Distributor recognition method.
       description: |
-        Authenticates a client using a refresh token provided by Flux team.
-        This endpoint will return an access token required to identify authenticated users and perform payment request
+        Distributor recognition method commonly used in integration tests to verify that the distributor is registered in the system and to test connectivity and measure status of the plattform.
       tags:
         - sendEcho
       responses:

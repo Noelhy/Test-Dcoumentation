@@ -12,13 +12,13 @@ The system has HTTPS implemented, which ensures the transfer of customer data to
 
 ## Security headers
 
-For more details check the pdf GPS_API_Security_V2.0.2.pdf
+For more details check the pdf `GPS_API_Security_V2.0.2.pdf`
 
 ## Security on payload
 
 The submission of the payload used in each API method must be sent encrypted using **AES256**. 
 The list of parameters must be set up in JSON to be subsequently encrypted using a key previously provided to the implementer.
-For more details check the pdf GPS_API_Security_V2.0.pdf
+For more details check the pdf  `GPS_API_Security_V2.0.pdf `
 
 ## General context
 

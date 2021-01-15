@@ -2,7 +2,7 @@
 id: doc3
 title: Response Code 
 ---
-_v2.0.1_
+ `_v2.0.1_`
 
 Below is the complete list of errors and success codes that can be obtained when interacting with the Gestopago API
 
