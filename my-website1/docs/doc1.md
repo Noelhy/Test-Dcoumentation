@@ -41,3 +41,5 @@ If the implementer needs it they can give it to Gestopago a set IP's for interac
 
 It is the maximum waiting time that API requests should have. ** _Currently the value is 62 seconds_**.
 
+
+

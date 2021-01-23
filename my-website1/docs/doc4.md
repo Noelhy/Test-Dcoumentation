@@ -6,9 +6,8 @@ title: Logo and References Images
 
 All the exposed services have their Logo in png file that can be downloaded or viewed in the following link, where it is necessary to use the ID_SERVICIO in question:
 
-
 ```
-https://<base_url>/sistema/images/gestopago/servicios/{ID_SERVICIO}.png
+    https://<base_url>/sistema/images/gestopago/servicios/{ID_SERVICIO}.png
 ```
 :::tip
 **For reference check**: 
@@ -18,7 +17,9 @@ https://<base_url>/sistema/images/gestopago/servicios/{ID_SERVICIO}.png
 ## HELP IMAGE / REFERENCE
 
 As well as the logos, most of the service payments have a help or reference image indicating where to get the data that needs to be entered in the front. The reference image can be obtained or displayed from the following URL, where it is necessary to use the SERVICE_ID in question:
-https://<base_url>/sistema/images/gestopago/referencias/{ID_SERVICIO}.jpg
+```
+    https://<base_url>/sistema/images/gestopago/referencias/{ID_SERVICIO}.jpg
+```
 
 :::tip
 **For reference check**: 
